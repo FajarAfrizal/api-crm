@@ -1,13 +1,15 @@
 const { findByIdAndUpdate } = require('./model');
 const Users = require('./model');
+const { StatusCodes } = require('http-status-codes')
 
 
 const { getAllUsers, createUser, getOneUser, updateUser, deleteUser, updatePasswordUser } = require('../../../service/mongoose/user')
 
 const index = async (req, res, next) => {
     try {
-        const result = await getAllUsers();
-        res.status(200).json({
+        const result = await getAllUsers(req);
+
+        res.status(StatusCodes.OK).json({
             data: result
         })
     } catch (err) {

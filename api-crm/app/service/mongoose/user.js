@@ -3,14 +3,22 @@ const bcrypt = require('bcryptjs');
 const { BadRequestError, NotFoundError } = require('../../errors');
 const { checkingImage }  = require('./images')
 
-const getAllUsers = async (req, res, next) => {
-    const result = await Users.find()
+const getAllUsers = async (req) => {
+    const { keyword } = req.query;
 
+    let condition = {};
+
+    if (keyword) {
+        condition = { ...condition, name: { $regex: keyword, $options: 'i' } };
+    }
+
+    const result = await Users.find(condition)
     .populate({
         path: 'image', // dari nama column di tabel user
         select: '_id name' // id dan name dari si image
     })
     .select('_id name email alamat nomer_hp tanggal_lahir jenis_kelamin image')
+
     return result;
 
 }
@@ -65,7 +73,7 @@ const updateUser = async (req) => {
         jenis_kelamin,
         image } = req.body;
 
-        await checkingImage(image)
+    await checkingImage(image)
 
     const check = await Users.findOne({
         email,
