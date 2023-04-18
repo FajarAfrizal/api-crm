@@ -16,7 +16,8 @@ const db = require('../app/db');
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
-db.on('error', function(err){
+db.on('error', function(err){  console.log('connection error: tidak bisa tersambung ke mongodb' );
+
   console.log('connection error: tidak bisa tersambung ke mongodb' );
 });
 

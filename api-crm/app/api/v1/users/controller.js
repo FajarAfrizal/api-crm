@@ -12,9 +12,11 @@ const index = async (req, res, next) => {
         res.status(StatusCodes.OK).json({
             data: result
         })
+
     } catch (err) {
         next(err);
     }
+
 }
 
 const create = async (req, res, next) => {
@@ -29,17 +31,12 @@ const create = async (req, res, next) => {
     } catch (err) {
         next(err)
     }
+    
 }
 
 const find = async (req, res, next) => {
     try {
         const result = await getOneUser(req)
-
-        if (!result) {
-            return res.status(404).json({
-                message: 'users tidak ditemukan'
-            })
-        }
 
         res.status(200).json({
             data: result
@@ -47,7 +44,7 @@ const find = async (req, res, next) => {
 
     } catch (err) {
         next(err)
-    }
+    }   
 }
 
 const update = async (req, res, next) => {

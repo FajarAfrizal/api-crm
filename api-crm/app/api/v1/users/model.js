@@ -4,12 +4,12 @@ const bcrypt = require('bcryptjs');
 
 let userSchema = Schema(
     {
-        name: { type: String, required: [true, 'nama harus di isi'], minLength: 3, maxLength: 50 },
+        name: { type: String, required: [true, 'nama harus di isi'], minLength: 3, maxLength: 50, unique: true },
         email: { type: String, required: [true, 'email harus di isi'], unique: true },
-        password: { type: String, required: [true, 'password harus di isi'] },
-        alamat: { type: String, required: [true, 'alamat harus di isi'] },
+        password: { type: String, default: 'beetpos123' },
+        alamat: { type: String, required: [true, 'alamat harus di isi'], unique: true  },
         nomer_hp: { type: Number, required: [true, 'nomer handphone harus di isi'], minLength: 9, maxLength: 15 },
-        tanggal_lahir: { type: String, required: [true, 'tanggal harus di isi'] },
+        tanggal_lahir: { type: Date, required: [true, 'tanggal harus di isi'] },
         jenis_kelamin: { type: String, required: [true, 'jenis kelamin harus di isi'], enum: ['Laki - Laki', 'Perempuan'] },
         image: { type: String },
         role: { type: String, enum: ['admin', 'user'], default: 'user' },

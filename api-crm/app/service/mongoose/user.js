@@ -15,21 +15,7 @@ const getAllUsers = async (req) => {
     const result = await Users.find(condition)
     .populate({
         path: 'image', // dari nama column di tabel user
-        select: '_id name' // id dan name dari si image
-    })
-    .select('_id name email alamat nomer_hp tanggal_lahir jenis_kelamin image')
-
-    return result;
-
-}
-const createUser = async (req) => {
-    const {
-        name,
-        email,
-        password,
-        alamat,
-        nomer_hp,
-        tanggal_lahir,
+        select: '_id name',
         jenis_kelamin,
         image
       } = req.body;
@@ -40,6 +26,14 @@ const createUser = async (req) => {
     const check = await Users.findOne({ email });
 
     if (check) throw new BadRequestError('email has been registered');
+
+    const nama = await Users.findOne({ name });
+
+    if (nama) throw new BadRequestError('name has been registered');
+
+    const no = await Users.findOne({ nomer_hp });
+
+    if (no) throw new BadRequestError('cellphone number has been registered');
 
     const result = await Users.create({ name, email, password, alamat, nomer_hp, tanggal_lahir, jenis_kelamin, image })
 

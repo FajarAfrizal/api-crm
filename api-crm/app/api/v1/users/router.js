@@ -6,9 +6,9 @@ const {
     authhorizeRoles,
 } = require('../../../middlewares/auth')
 
-router.get('/users', authenticateUser, authhorizeRoles('admin'), index);
+router.get('/users', index);
 router.post('/users', authenticateUser, authhorizeRoles('admin'), create);
-router.get('/users/:id', authenticateUser, authhorizeRoles('admin'), find);
+router.get('/users/:id', authenticateUser, authhorizeRoles('admin', 'user'), find);
 router.put('/users/:id', authenticateUser, authhorizeRoles('admin', 'user'), update );
 router.delete('/users/:id', authenticateUser, authhorizeRoles('admin'), destroy);
 router.put('/users/updatePassword/:id',authenticateUser, updatePasword);
@@ -19,3 +19,4 @@ router.get('/userLogin', authenticateUser, getUserSignin )
 
 
 module.exports = router;
+// 
